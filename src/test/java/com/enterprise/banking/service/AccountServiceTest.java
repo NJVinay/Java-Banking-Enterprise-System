@@ -28,22 +28,22 @@ import static org.mockito.Mockito.*;
  */
 @ExtendWith(MockitoExtension.class)
 class AccountServiceTest {
-    
+
     @Mock
     private AccountRepository accountRepository;
-    
+
     @Mock
     private UserRepository userRepository;
-    
+
     @Mock
     private AccountFactory accountFactory;
-    
+
     @InjectMocks
     private AccountService accountService;
-    
+
     private User testUser;
     private Account testAccount;
-    
+
     @BeforeEach
     void setUp() {
         testUser = new User();
@@ -51,7 +51,7 @@ class AccountServiceTest {
         testUser.setUsername("testuser");
         testUser.setEmail("test@example.com");
         testUser.setFullName("Test User");
-        
+
         testAccount = new Account();
         testAccount.setId(1L);
         testAccount.setAccountNumber("CHK-123456-ABCD");
@@ -60,17 +60,17 @@ class AccountServiceTest {
         testAccount.setUser(testUser);
         testAccount.setStatus(Account.AccountStatus.ACTIVE);
     }
-    
+
     @Test
     void testCreateAccount_Success() {
         // Arrange
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(testUser));
         when(accountFactory.createAccount(any(), any())).thenReturn(testAccount);
         when(accountRepository.save(any(Account.class))).thenReturn(testAccount);
-        
+
         // Act
         Account createdAccount = accountService.createAccount("testuser", Account.AccountType.CHECKING);
-        
+
         // Assert
         assertNotNull(createdAccount);
         assertEquals("CHK-123456-ABCD", createdAccount.getAccountNumber());
@@ -78,18 +78,18 @@ class AccountServiceTest {
         verify(accountFactory, times(1)).createAccount(any(), any());
         verify(accountRepository, times(1)).save(any(Account.class));
     }
-    
+
     @Test
     void testCreateAccount_UserNotFound_ThrowsException() {
         // Arrange
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
-        
+
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> {
             accountService.createAccount("nonexistent", Account.AccountType.CHECKING);
         });
     }
-    
+
     @Test
     void testGetUserAccounts_Success() {
         // Arrange
@@ -97,78 +97,78 @@ class AccountServiceTest {
         account2.setId(2L);
         account2.setAccountNumber("SAV-789012-EFGH");
         account2.setAccountType(Account.AccountType.SAVINGS);
-        
+
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(testUser));
         when(accountRepository.findByUser(any(User.class)))
-            .thenReturn(Arrays.asList(testAccount, account2));
-        
+                .thenReturn(Arrays.asList(testAccount, account2));
+
         // Act
         List<Account> accounts = accountService.getUserAccounts("testuser");
-        
+
         // Assert
         assertNotNull(accounts);
         assertEquals(2, accounts.size());
         verify(accountRepository, times(1)).findByUser(testUser);
     }
-    
+
     @Test
     void testCloseAccount_Success() {
         // Arrange
         testAccount.setBalance(BigDecimal.ZERO);
         when(accountRepository.findByAccountNumber(anyString())).thenReturn(Optional.of(testAccount));
         when(accountRepository.save(any(Account.class))).thenReturn(testAccount);
-        
+
         // Act
         accountService.closeAccount("CHK-123456-ABCD");
-        
+
         // Assert
         assertEquals(Account.AccountStatus.CLOSED, testAccount.getStatus());
         verify(accountRepository, times(1)).save(testAccount);
     }
-    
+
     @Test
     void testCloseAccount_NonZeroBalance_ThrowsException() {
         // Arrange
         testAccount.setBalance(new BigDecimal("100.00"));
         when(accountRepository.findByAccountNumber(anyString())).thenReturn(Optional.of(testAccount));
-        
+
         // Act & Assert
         assertThrows(IllegalStateException.class, () -> {
             accountService.closeAccount("CHK-123456-ABCD");
         });
     }
-    
+
     @Test
     void testGetTotalBalance_UsingStreamsAPI() {
         // Arrange
         Account account2 = new Account();
         account2.setBalance(new BigDecimal("500.00"));
         account2.setStatus(Account.AccountStatus.ACTIVE);
-        
+
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(testUser));
         when(accountRepository.findByUser(any(User.class)))
-            .thenReturn(Arrays.asList(testAccount, account2));
-        
+                .thenReturn(Arrays.asList(testAccount, account2));
+
         // Act
         BigDecimal totalBalance = accountService.getTotalBalance("testuser");
-        
+
         // Assert
         assertEquals(new BigDecimal("1500.00"), totalBalance);
     }
-    
+
     @Test
     void testGetActiveAccountsCount_UsingStreamsAPI() {
         // Arrange
         Account inactiveAccount = new Account();
         inactiveAccount.setStatus(Account.AccountStatus.CLOSED);
-        
+
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(testUser));
         when(accountRepository.findByUser(any(User.class)))
-            .thenReturn(Arrays.asList(testAccount, inactiveAccount));
-        
+                .thenReturn(Arrays.asList(testAccount, inactiveAccount));
+
         // Act
         long activeCount = accountService.getActiveAccountsCount("testuser");
-        
+
         // Assert
         assertEquals(1, activeCount);
     }
