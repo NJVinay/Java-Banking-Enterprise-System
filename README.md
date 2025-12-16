@@ -11,6 +11,7 @@ A production-ready, enterprise-grade banking system built with Java, Spring Boot
 ## 🎯 Key Features
 
 ### Core Banking Operations
+
 - **Deposits, Withdrawals, Transfers** with ACID-compliant transactions
 - **Balance Inquiries** with transaction history
 - **Multi-Account Support** (Checking, Savings, Credit accounts)
@@ -18,12 +19,14 @@ A production-ready, enterprise-grade banking system built with Java, Spring Boot
 - **Real-time Transaction Notifications** (Email, SMS)
 
 ### Security & Authentication
+
 - **BCrypt Password Hashing** (12-round encryption)
 - **Account Lockout** after failed login attempts
 - **Role-Based Access Control** (Customer, Teller, Manager, Admin)
 - **Secure Transaction Management** with optimistic locking
 
 ### Additional Modules
+
 - **Library Management System** - Book borrowing and tracking
 - **Inventory Management System** - Stock tracking and reorder management
 
@@ -50,13 +53,13 @@ A production-ready, enterprise-grade banking system built with Java, Spring Boot
 
 ### Design Patterns Implemented
 
-| Pattern | Implementation | Purpose |
-|---------|---------------|---------|
-| **Singleton** | `DatabaseConnectionManager` | Thread-safe database connection management |
-| **Factory** | `AccountFactory` | Dynamic account creation (Checking, Savings, Credit) |
-| **DAO** | `*Repository` interfaces | Data access abstraction layer |
-| **MVC** | Controllers, Services, Entities | Separation of concerns |
-| **Observer** | `TransactionNotifier`, `*Observer` | Real-time transaction notifications |
+| Pattern       | Implementation                     | Purpose                                              |
+| ------------- | ---------------------------------- | ---------------------------------------------------- |
+| **Singleton** | `DatabaseConnectionManager`        | Thread-safe database connection management           |
+| **Factory**   | `AccountFactory`                   | Dynamic account creation (Checking, Savings, Credit) |
+| **DAO**       | `*Repository` interfaces           | Data access abstraction layer                        |
+| **MVC**       | Controllers, Services, Entities    | Separation of concerns                               |
+| **Observer**  | `TransactionNotifier`, `*Observer` | Real-time transaction notifications                  |
 
 ## 🚀 Technology Stack
 
@@ -148,11 +151,13 @@ src/
 1. Install MySQL and start the MySQL server
 
 2. Create the database:
+
 ```sql
 CREATE DATABASE banking_system;
 ```
 
 3. Update database credentials in `src/main/resources/application.properties`:
+
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/banking_system
 spring.datasource.username=YOUR_USERNAME
@@ -162,22 +167,26 @@ spring.datasource.password=YOUR_PASSWORD
 ### Build and Run
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd "Java Bank Enterprise"
 ```
 
 2. Build the project:
+
 ```bash
 mvn clean install
 ```
 
 3. Run tests:
+
 ```bash
 mvn test
 ```
 
 4. Run the application:
+
 ```bash
 mvn spring-boot:run
 ```
@@ -189,6 +198,7 @@ The application will start on `http://localhost:8080`
 ### Banking Operations
 
 #### Deposit
+
 ```http
 POST /api/banking/deposit
 Content-Type: application/json
@@ -202,6 +212,7 @@ Content-Type: application/json
 ```
 
 #### Withdraw
+
 ```http
 POST /api/banking/withdraw
 Content-Type: application/json
@@ -215,6 +226,7 @@ Content-Type: application/json
 ```
 
 #### Transfer
+
 ```http
 POST /api/banking/transfer
 Content-Type: application/json
@@ -229,11 +241,13 @@ Content-Type: application/json
 ```
 
 #### Get Balance
+
 ```http
 GET /api/banking/balance/{accountNumber}
 ```
 
 #### Get Transaction History
+
 ```http
 GET /api/banking/transactions/{accountNumber}?startDate=2024-01-01T00:00:00&endDate=2024-12-31T23:59:59
 ```
@@ -241,21 +255,25 @@ GET /api/banking/transactions/{accountNumber}?startDate=2024-01-01T00:00:00&endD
 ### Account Management
 
 #### Create Account
+
 ```http
 POST /api/accounts?username=testuser&accountType=CHECKING
 ```
 
 #### Get User Accounts
+
 ```http
 GET /api/accounts/user/{username}
 ```
 
 #### Get Account Details
+
 ```http
 GET /api/accounts/{accountNumber}
 ```
 
 #### Close Account
+
 ```http
 DELETE /api/accounts/{accountNumber}
 ```
@@ -263,6 +281,7 @@ DELETE /api/accounts/{accountNumber}
 ### ATM Operations
 
 #### ATM Withdrawal
+
 ```http
 POST /api/atm/withdraw
 Content-Type: application/json
@@ -274,6 +293,7 @@ Content-Type: application/json
 ```
 
 #### ATM Balance Inquiry
+
 ```http
 GET /api/atm/balance/{accountNumber}
 ```
@@ -281,6 +301,7 @@ GET /api/atm/balance/{accountNumber}
 ### Library Management
 
 #### Add Book
+
 ```http
 POST /api/library/books
 Content-Type: application/json
@@ -294,16 +315,19 @@ Content-Type: application/json
 ```
 
 #### Borrow Book
+
 ```http
 POST /api/library/books/{isbn}/borrow
 ```
 
 #### Return Book
+
 ```http
 POST /api/library/books/{isbn}/return
 ```
 
 #### Search Books
+
 ```http
 GET /api/library/books/search?keyword=java
 ```
@@ -311,6 +335,7 @@ GET /api/library/books/search?keyword=java
 ### Inventory Management
 
 #### Add Inventory Item
+
 ```http
 POST /api/inventory/items
 Content-Type: application/json
@@ -325,11 +350,13 @@ Content-Type: application/json
 ```
 
 #### Add Stock
+
 ```http
 POST /api/inventory/items/{sku}/add-stock?quantity=10
 ```
 
 #### Get Low Stock Items
+
 ```http
 GET /api/inventory/items/low-stock
 ```
@@ -337,16 +364,19 @@ GET /api/inventory/items/low-stock
 ## 🧪 Testing
 
 ### Run All Tests
+
 ```bash
 mvn test
 ```
 
 ### Run Specific Test Class
+
 ```bash
 mvn test -Dtest=BankingServiceTest
 ```
 
 ### Generate Test Coverage Report
+
 ```bash
 mvn clean test jacoco:report
 ```
@@ -364,6 +394,7 @@ View the coverage report at: `target/site/jacoco/index.html`
 ## 🎓 Java 8+ Features Used
 
 ### Streams API
+
 ```java
 // Filter and sum deposits using Streams
 return transactionRepository.findByAccount(account).stream()
@@ -374,6 +405,7 @@ return transactionRepository.findByAccount(account).stream()
 ```
 
 ### Lambda Expressions
+
 ```java
 // Register observers with lambda
 observers.forEach(observer -> {
@@ -386,6 +418,7 @@ observers.forEach(observer -> {
 ```
 
 ### Optional for Null Safety
+
 ```java
 // Safe navigation with Optional
 public Optional<Account> getAccountByNumber(String accountNumber) {
@@ -394,6 +427,7 @@ public Optional<Account> getAccountByNumber(String accountNumber) {
 ```
 
 ### Collections Framework
+
 - **ArrayList** - Transaction history lists
 - **HashMap** - Category summaries
 - **LinkedList** - Pending transactions queue
@@ -402,6 +436,7 @@ public Optional<Account> getAccountByNumber(String accountNumber) {
 ## 🔐 Security Features
 
 ### BCrypt Password Hashing
+
 ```java
 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 String hashedPassword = encoder.encode(plainPassword);
@@ -409,11 +444,13 @@ boolean matches = encoder.matches(plainPassword, hashedPassword);
 ```
 
 ### Account Lockout Policy
+
 - Maximum 5 failed login attempts
 - Automatic account lock after threshold
 - Admin unlock capability
 
 ### Transaction Security
+
 - **Optimistic Locking** - Prevents lost updates
 - **Pessimistic Locking** - For critical sections
 - **ACID Compliance** - All or nothing transactions
@@ -422,6 +459,7 @@ boolean matches = encoder.matches(plainPassword, hashedPassword);
 ## 📊 Database Schema
 
 ### Core Tables
+
 - **users** - User authentication and profile
 - **customers** - Customer KYC information
 - **accounts** - Bank account details
@@ -430,6 +468,7 @@ boolean matches = encoder.matches(plainPassword, hashedPassword);
 - **inventory_items** - Product inventory
 
 ### Key Relationships
+
 - User → Accounts (One-to-Many)
 - Account → Transactions (One-to-Many)
 - User ↔ Customer (One-to-One)
@@ -437,31 +476,41 @@ boolean matches = encoder.matches(plainPassword, hashedPassword);
 ## 🎯 Design Patterns in Detail
 
 ### Singleton Pattern
+
 **DatabaseConnectionManager** ensures single database connection instance
+
 - Thread-safe with double-checked locking
 - Lazy initialization
 - Connection pooling support
 
 ### Factory Pattern
+
 **AccountFactory** creates account instances based on type
+
 - Encapsulates account creation logic
 - Default configurations per account type
 - Custom account creation support
 
 ### Observer Pattern
+
 **TransactionNotifier** broadcasts transaction events
+
 - Email notifications
 - SMS notifications
 - Extensible for additional observers
 
 ### DAO Pattern
+
 **Repository** interfaces abstract data access
+
 - Spring Data JPA implementation
 - Custom query methods
 - Transaction management
 
 ### MVC Pattern
+
 Clear separation of concerns:
+
 - **Model**: Entity classes
 - **View**: REST API responses
 - **Controller**: HTTP request handlers
@@ -469,12 +518,14 @@ Clear separation of concerns:
 ## 🚦 Exception Handling
 
 ### Custom Exceptions
+
 - `BankingException` - Base exception
 - `AccountNotFoundException` - Account not found
 - `InsufficientFundsException` - Insufficient balance
 - `AuthenticationException` - Login failures
 
 ### Error Responses
+
 ```json
 {
   "status": "error",
@@ -494,18 +545,21 @@ Clear separation of concerns:
 ## 🔄 Transaction Management
 
 ### ACID Properties
+
 - **Atomicity**: All or nothing operations
 - **Consistency**: Database constraints enforced
 - **Isolation**: Concurrent transaction handling
 - **Durability**: Persistent after commit
 
 ### Isolation Levels
+
 - `READ_COMMITTED` - Standard operations
 - `SERIALIZABLE` - Critical transfers
 
 ## 📝 Logging
 
 Comprehensive logging at multiple levels:
+
 - **DEBUG**: Development troubleshooting
 - **INFO**: Key business events
 - **WARN**: Potential issues
