@@ -57,13 +57,16 @@ public class EmailNotificationObserver implements TransactionObserver {
 
     private String buildCompletionEmailBody(Transaction transaction) {
         return String.format(
-                "Your transaction has been completed successfully.\n\n" +
-                        "Reference Number: %s\n" +
-                        "Type: %s\n" +
-                        "Amount: $%s\n" +
-                        "Balance After: $%s\n" +
-                        "Date: %s\n\n" +
-                        "Thank you for banking with us!",
+                """
+                Your transaction has been completed successfully.
+                
+                Reference Number: %s
+                Type: %s
+                Amount: $%s
+                Balance After: $%s
+                Date: %s
+                
+                Thank you for banking with us!""",
                 transaction.getReferenceNumber(),
                 transaction.getTransactionType(),
                 transaction.getAmount(),
@@ -73,13 +76,16 @@ public class EmailNotificationObserver implements TransactionObserver {
 
     private String buildFailureEmailBody(Transaction transaction, String reason) {
         return String.format(
-                "Your transaction has failed.\n\n" +
-                        "Reference Number: %s\n" +
-                        "Type: %s\n" +
-                        "Amount: $%s\n" +
-                        "Reason: %s\n" +
-                        "Date: %s\n\n" +
-                        "Please contact customer support if you need assistance.",
+                """
+                Your transaction has failed.
+                
+                Reference Number: %s
+                Type: %s
+                Amount: $%s
+                Reason: %s
+                Date: %s
+                
+                Please contact customer support if you need assistance.""",
                 transaction.getReferenceNumber(),
                 transaction.getTransactionType(),
                 transaction.getAmount(),
@@ -89,12 +95,15 @@ public class EmailNotificationObserver implements TransactionObserver {
 
     private String buildInitiationEmailBody(Transaction transaction) {
         return String.format(
-                "A large transaction has been initiated on your account.\n\n" +
-                        "Reference Number: %s\n" +
-                        "Type: %s\n" +
-                        "Amount: $%s\n" +
-                        "Date: %s\n\n" +
-                        "If you did not authorize this transaction, please contact us immediately.",
+                """
+                A large transaction has been initiated on your account.
+                
+                Reference Number: %s
+                Type: %s
+                Amount: $%s
+                Date: %s
+                
+                If you did not authorize this transaction, please contact us immediately.""",
                 transaction.getReferenceNumber(),
                 transaction.getTransactionType(),
                 transaction.getAmount(),

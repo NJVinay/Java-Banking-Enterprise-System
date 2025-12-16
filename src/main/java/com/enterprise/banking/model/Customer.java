@@ -129,7 +129,7 @@ public class Customer {
     }
 
     public String getFullName() {
-        return String.format("%s %s %s",
+        return "%s %s %s".formatted(
                 firstName,
                 middleName != null ? middleName : "",
                 lastName).replaceAll("\\s+", " ").trim();

@@ -102,7 +102,7 @@ public class AccountFactory {
 
         String timestamp = String.valueOf(System.currentTimeMillis()).substring(5);
         String random = UUID.randomUUID().toString().substring(0, 4).toUpperCase();
-        return String.format("%s-%s-%s", prefix, timestamp, random);
+        return "%s-%s-%s".formatted(prefix, timestamp, random);
     }
 
     /**
