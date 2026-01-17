@@ -1,5 +1,7 @@
 # Java Enterprise Banking System
 
+**GitHub Repository**: https://github.com/NJVinay/Java-Banking-Enterprise-System
+
 [![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.0-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Maven](https://img.shields.io/badge/Maven-3.8+-blue.svg)](https://maven.apache.org/)
